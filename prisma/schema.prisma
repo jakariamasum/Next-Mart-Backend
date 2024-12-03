@@ -16,6 +16,7 @@ model User {
   image               String?
   contactNumber       String?
   passwordChangedAt   DateTime?
+  role                RoleType @default(USER)
   isActive            Boolean   @default(true)
   accounts            Account[]
   createdAt           DateTime @default(now())
@@ -37,4 +38,10 @@ model Account {
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
   @@unique([provider, providerAccountId])
+}
+
+enum RoleType {
+  USER 
+  VENDOR
+  ADMIN
 }
