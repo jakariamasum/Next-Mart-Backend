@@ -17,8 +17,9 @@ const getAllUsers = catchAsync(async (req, res) => {
   });
 });
 const getSingleUser = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = await UserServices.getSingleUsersFromDB(id);
+  const email = req.email;
+  console.log("hit here: ", email);
+  const result = await UserServices.getSingleUsersFromDB(email!);
   if (!result) {
     throw new AppError(404, "User not find.");
   }

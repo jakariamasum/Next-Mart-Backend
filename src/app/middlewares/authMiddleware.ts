@@ -6,14 +6,14 @@ import config from "../../config";
 
 interface DecodedToken {
   id: string;
-  role: "USER" | "ADMIN";
+  role: "USER" | "ADMIN" | "VENDOR";
   email: string;
 }
 
 declare module "express-serve-static-core" {
   interface Request {
     id?: string;
-    role?: "USER" | "ADMIN";
+    role?: "USER" | "ADMIN" | "VENDOR";
     email?: string;
   }
 }
@@ -68,5 +68,26 @@ const isUserMiddleware = (req: Request, res: Response, next: NextFunction) => {
   }
   next();
 };
+// Middleware to check if user is vendor
+const isVendorMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.role !== "VENDOR") {
+    return sendResponse(res, {
+      success: false,
+      statusCode: 401,
+      message: "You have no access to this route",
+      data: "",
+    });
+  }
+  next();
+};
 
-export { authMiddleware, isAdminMiddleware, isUserMiddleware };
+export {
+  authMiddleware,
+  isAdminMiddleware,
+  isUserMiddleware,
+  isVendorMiddleware,
+};

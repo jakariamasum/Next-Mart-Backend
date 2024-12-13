@@ -41,6 +41,8 @@ const registerUser = async (payload: IRegister) => {
     name: newUser.name as string,
     email: newUser.email,
     role: newUser.role,
+    image: newUser.image!,
+    isActive: newUser.isActive,
   };
 
   const accessToken = createToken(
@@ -98,6 +100,8 @@ export const loginUser = async (payload: ILogin) => {
       name: user.name as string,
       email: user.email,
       role: user.role,
+      image: user.image!,
+      isActive: user.isActive,
     };
 
     const accessToken = createToken(
@@ -214,9 +218,9 @@ const refreshToken = async (token: string) => {
     id: user.id,
     name: user.name as string,
     email: user.email,
-    contactNumber: user.contactNumber,
     role: user.role,
-    status: user.isActive,
+    image: user.image!,
+    isActive: user.isActive,
   };
 
   const accessToken = createToken(

@@ -40,6 +40,16 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+model Category {
+  id String @id @default(uuid())
+  name String
+  image String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories")
+}
+
 enum RoleType {
   USER 
   VENDOR
