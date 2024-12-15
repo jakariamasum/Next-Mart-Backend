@@ -42,7 +42,7 @@ const getSingleproduct = catchAsync(async (req, res) => {
   });
 });
 const getVendorProducts = catchAsync(async (req, res) => {
-  const id = req.id;
+  const { id } = req.params;
   console.log("vendorId: ", id);
   const result = await productServices.getVendorProductFromDB(id!);
   if (!result) {

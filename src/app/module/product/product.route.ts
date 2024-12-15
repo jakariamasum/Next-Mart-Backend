@@ -6,11 +6,7 @@ const router = Router();
 
 router.post("/", ProductControllers.createproduct);
 router.get("/", ProductControllers.getAllProducts);
-router.get(
-  "/vendors/product",
-  authMiddleware,
-  ProductControllers.getVendorProducts
-);
+router.get("/vendors/product/:id", ProductControllers.getVendorProducts);
 router.get("/:id", ProductControllers.getSingleproduct);
 router.put("/:id", ProductControllers.updateproduct);
 router.delete("/:id", ProductControllers.deleteProduct);
