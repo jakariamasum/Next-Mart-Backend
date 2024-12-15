@@ -15,10 +15,12 @@ model User {
   name                String?
   image               String?
   contactNumber       String?
+  details             String?
   passwordChangedAt   DateTime?
   role                RoleType @default(USER)
   isActive            Boolean   @default(true)
   accounts            Account[]
+  products            Product[]
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
   address             String?
@@ -44,10 +46,29 @@ model Category {
   id String @id @default(uuid())
   name String
   image String?
+  products Product[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("categories")
+}
+
+model Product {
+  id String @id @default(uuid())
+  name  String
+  price Int 
+  category_id String
+  category Category @relation(fields: [category_id],references: [id])
+  vendor_id String
+  vendor User @relation(fields: [vendor_id],references: [id])
+  inventory Int
+  images String[]
+  discount Int
+  rating Decimal @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("products")
 }
 
 enum RoleType {
