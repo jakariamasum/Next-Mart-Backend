@@ -60,6 +60,7 @@ const registerUser = async (payload: IRegister) => {
   return {
     accessToken,
     refreshToken,
+    newUser,
   };
 };
 
@@ -119,6 +120,7 @@ export const loginUser = async (payload: ILogin) => {
     return {
       accessToken,
       refreshToken,
+      user,
     };
   } catch (error) {
     console.error("Login error:", error);

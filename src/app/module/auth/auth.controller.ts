@@ -6,7 +6,7 @@ import config from "../../../config";
 
 const registerUser = catchAsync(async (req, res) => {
   const result = await AuthServices.registerUser(req.body);
-  const { refreshToken, accessToken } = result;
+  const { refreshToken, accessToken, newUser } = result;
 
   res.cookie("refreshToken", refreshToken, {
     secure: config.NODE_ENV === "production",
@@ -21,13 +21,14 @@ const registerUser = catchAsync(async (req, res) => {
     data: {
       accessToken,
       refreshToken,
+      user: newUser,
     },
   });
 });
 
 const loginUser = catchAsync(async (req, res) => {
   const result = await AuthServices.loginUser(req.body);
-  const { refreshToken, accessToken } = result;
+  const { refreshToken, accessToken, user } = result;
 
   res.cookie("refreshToken", refreshToken, {
     secure: config.NODE_ENV === "production",
@@ -42,6 +43,8 @@ const loginUser = catchAsync(async (req, res) => {
     data: {
       accessToken,
       refreshToken,
+      result,
+      user,
     },
   });
 });
