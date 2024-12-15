@@ -33,6 +33,21 @@ const getAllProductsFromDB = async () => {
 const getSingProductFromDB = async (id: string) => {
   const result = await prisma.product.findUnique({
     where: { id },
+    include: {
+      category: true,
+      vendor: true,
+    },
+  });
+  return result;
+};
+const getVendorProductFromDB = async (id: string) => {
+  console.log("vendorId: ", id);
+  const result = await prisma.product.findMany({
+    where: { vendor_id: id },
+    include: {
+      category: true,
+      vendor: true,
+    },
   });
   return result;
 };
@@ -61,6 +76,7 @@ export const productServices = {
   createProductIntoDB,
   getAllProductsFromDB,
   getSingProductFromDB,
+  getVendorProductFromDB,
   updateProductIntoDB,
   deleteProductFromDB,
 };

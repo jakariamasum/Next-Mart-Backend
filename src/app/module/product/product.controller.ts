@@ -41,6 +41,20 @@ const getSingleproduct = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const getVendorProducts = catchAsync(async (req, res) => {
+  const id = req.id;
+  console.log("vendorId: ", id);
+  const result = await productServices.getVendorProductFromDB(id!);
+  if (!result) {
+    throw new AppError(404, "Products not find.");
+  }
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Products retrived successfully!",
+    data: result,
+  });
+});
 const updateproduct = catchAsync(async (req, res) => {
   const { id } = req.params;
   const result = await productServices.updateProductIntoDB(id, req.body);
@@ -72,6 +86,7 @@ export const ProductControllers = {
   createproduct,
   getAllProducts,
   getSingleproduct,
+  getVendorProducts,
   updateproduct,
   deleteProduct,
 };
