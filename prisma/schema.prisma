@@ -21,6 +21,7 @@ model User {
   isActive            Boolean   @default(true)
   accounts            Account[]
   products            Product[]
+  carts               Cart[]
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
   address             String?
@@ -65,11 +66,26 @@ model Product {
   images String[]
   discount Int
   rating Decimal @default(0)
+  carts Cart[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("products")
 }
+
+model Cart {
+  id         String   @id @default(uuid())
+  user_id     String
+  user       User     @relation(fields: [user_id], references: [id])
+  product_id  String
+  product    Product  @relation(fields: [product_id], references: [id])
+  quantity   Int      @default(1)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("carts")
+}
+
 
 enum RoleType {
   USER 
